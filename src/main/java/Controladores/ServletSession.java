@@ -36,7 +36,7 @@ public class ServletSession extends HttpServlet {
             HttpSession misession= (HttpSession) request.getSession();
             misession.removeAttribute("usuario");
             misession.invalidate();
-            response.sendRedirect("/WebJava04/index.html");
+            response.sendRedirect("/WebJava04/cierre.html");
         }finally{}
 
     }

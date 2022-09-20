@@ -1,3 +1,4 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -28,13 +29,22 @@
   String url   = "jdbc:mysql://localhost:3306/test?useSSL=false&serverTimezone=UTC";
   String user   = "root";
   String pass   = "gatoronpedo123";
-  
+  String est = "";
   Class.forName(driver);
   Connection xcon = DriverManager.getConnection(url, user, pass);
   
   String sql = "select * from cargos";
+  String sql2 = "select * from t_usuarios where NOMBRE=?";
   Statement stm = xcon.createStatement();
   ResultSet rs = stm.executeQuery(sql);
+  PreparedStatement ps=xcon.prepareStatement(sql2);
+  ps.setString(1, usuario );
+
+  ResultSet rs2 = ps.executeQuery();
+  while (rs2.next()){
+      est = rs2.getString("ESTADO");
+  }
+  
 %>
  
 <!DOCTYPE html>
@@ -52,6 +62,7 @@
         <div class="container">
 
             <h3>Usuario Logeado: <b><% out.print(usuario); %></b></h3>
+            <h3>Estado: <b><% out.print(est); %></b></h3>
 
             <h3><a class='btn btn-danger' href="/WebJava04/ServletSession">Cerrar Sesion</a></h3>
             <h1>Listado de Areas</h1>
